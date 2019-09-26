@@ -65,9 +65,9 @@ public class Islemler {
                     case"/":
                         sonuc=d2/d1;
                         break;
-                        default:
-                            System.out.println("Bilinmeyen işlem bulundu!");
-                            break;
+                    default:
+                        System.out.println("Bilinmeyen işlem bulundu!");
+                        break;
 
                 }
                 fstack.push(sonuc);
@@ -83,6 +83,13 @@ public class Islemler {
      */
     public static String infixToPostfix(String girdi){
         Stack<String>fstack=new Stack<String>();
+        Map<String, Integer> precedence=new HashMap<>();
+        precedence.put("+",2);
+        precedence.put("-",2);
+        precedence.put("*",3);
+        precedence.put("/",3);
+        precedence.put("(",1);
+        precedence.put(")",1);
         String[] gs=splitToTokens(girdi);
         String postfix="";
         for(String s:gs){
@@ -97,15 +104,17 @@ public class Islemler {
                     f = fstack.pop();
                 }
             }
-            else{
-                while(!fstack.isEmpty())
-                    postfix+=fstack.pop()+" ";
-                fstack.push(s);
+            else {
+                while (!fstack.isEmpty() && precedence.get(fstack.peek()) > precedence.get(s)) {
+                    postfix += fstack.pop() + " ";
+                }
+                    fstack.push(s);
+                
             }
-
         }
         while(!fstack.isEmpty())
             postfix+=fstack.pop()+" ";
+        postfix=postfix.substring(0,postfix.length()-1);
         return postfix;
     }
 
