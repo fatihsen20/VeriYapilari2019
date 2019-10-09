@@ -25,7 +25,7 @@ public class Islemler {
      */
     public static <T> boolean esit(Stack<T> s1, Stack<T> s2)
     {
-        s1.equals(s2);
+        //s1.equals(s2);
         Stack<T> news1=(Stack<T>)s1.clone();
         Stack<T> news2=(Stack<T>)s2.clone();
         while (!news1.isEmpty()&&!news2.isEmpty()) {
